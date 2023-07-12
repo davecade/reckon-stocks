@@ -26,7 +26,8 @@ app.get("/api/stocks", async (req: Request, res: Response) => {
 		const apiUrl = "https://join.reckon.com/stock-pricing";
 
 		const response: AxiosResponse<Stock[]> = await axios.get(apiUrl);
-		const data = response.data;
+
+		const data: Stock[] = response.data;
 
 		res.json(data);
 	} catch (error) {
