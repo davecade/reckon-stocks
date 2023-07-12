@@ -31,7 +31,7 @@ const useStocks = (): [StockData[] | null, StockData[] | null] => {
 						currentPrice: stock.price,
 					}));
 
-					setTimeout(() => setData(initialData), 5000);
+					setData(initialData);
 				} else {
 					const updatedData = dataRef.current.map((stock) => {
 						const newStock = response.data.find(
