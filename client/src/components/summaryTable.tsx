@@ -2,13 +2,15 @@ import React, { useEffect, useState } from "react";
 import useStocks from "../hooks/useStocks";
 import classes from "./summaryTable.module.scss";
 
+type HighlightState = { [key: string]: boolean };
+
 const SummaryTable: React.FC = () => {
 	const [data, prevData] = useStocks();
-	const [highlight, setHighlight] = useState<{ [key: string]: boolean }>({});
+	const [highlight, setHighlight] = useState<HighlightState>({});
 
 	useEffect(() => {
 		if (data && prevData) {
-			const newHighlight: { [key: string]: boolean } = {};
+			const newHighlight: HighlightState = {};
 			data.forEach((stock, i) => {
 				const prevStock = prevData[i];
 				if (prevStock) {
