@@ -1,0 +1,40 @@
+.container {
+	max-width: 800px;
+	margin: auto;
+	padding: 20px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.summary_table {
+	width: 100%;
+	border-collapse: collapse;
+    background-color: #111318;
+	color: white;
+}
+
+.summary_table th,
+.summary_table td {
+	border: 1px solid #ddd;
+	padding: 8px;
+}
+
+.summary_table th {
+	padding-top: 12px;
+	padding-bottom: 12px;
+	text-align: left;
+	background-color: #4caf50;
+	color: white;
+}
+
+.price_updated {
+	animation: flash 1s ease-out;
+
+	@keyframes flash {
+		0% {
+			color: green;
+		}
+		100% {
+			color: #ccc;
+		}
+	}
+}
