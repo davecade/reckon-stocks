@@ -9,6 +9,11 @@ interface StockData {
 	currentPrice: number;
 }
 
+interface StockApiResponse {
+	code: string;
+	price: number;
+}
+
 const useStocks = (): [StockData[] | null, StockData[] | null] => {
 	const [data, setData] = useState<StockData[] | null>(null);
 	const [prevData, setPrevData] = useState<StockData[] | null>(null);
@@ -20,10 +25,9 @@ const useStocks = (): [StockData[] | null, StockData[] | null] => {
 	useEffect(() => {
 		const fetchStockData = async () => {
 			try {
-				const response = await axios.get("/api/stocks");
-
+				const response = await axios.get<StockApiResponse[]>("/api/stocks");
 				if (dataRef.current === null) {
-					const initialData = response.data.map((stock: any) => ({
+					const initialData = response.data.map((stock: StockApiResponse) => ({
 						code: stock.code,
 						startingPrice: stock.price,
 						lowestPrice: stock.price,
@@ -35,7 +39,7 @@ const useStocks = (): [StockData[] | null, StockData[] | null] => {
 				} else {
 					const updatedData = dataRef.current.map((stock) => {
 						const newStock = response.data.find(
-							(s: any) => s.code === stock.code
+							(s: StockApiResponse) => s.code === stock.code
 						);
 						if (newStock) {
 							return {
