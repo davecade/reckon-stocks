@@ -1,12 +1,19 @@
-import express from "express";
+import express, { Request, Response } from "express";
 import axios from "axios";
 import cors from "cors";
 import path from "path";
+import { config as dotenvConfig } from "dotenv";
+import { AxiosResponse } from "axios";
 
-if (process.env.NODE_ENV !== "production") require("dotenv").config();
+interface Stock {
+	code: string;
+	price: number;
+}
+
+if (process.env.NODE_ENV !== "production") dotenvConfig();
 
 const app = express();
-const PORT = process.env.PORT || 9898;
+const PORT: number = Number(process.env.PORT) || 9898;
 
 //-- Middleware --//
 app.use(cors());
@@ -14,11 +21,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 //-- Routes --//
-app.get("/api/stocks", async (req, res) => {
+app.get("/api/stocks", async (req: Request, res: Response) => {
 	try {
 		const apiUrl = "https://join.reckon.com/stock-pricing";
 
-		const response = await axios.get(apiUrl);
+		const response: AxiosResponse<Stock[]> = await axios.get(apiUrl);
 		const data = response.data;
 
 		res.json(data);
@@ -34,7 +41,7 @@ app.get("/api/stocks", async (req, res) => {
 if (process.env.NODE_ENV === "production") {
 	app.use(express.static(path.join(__dirname, "client/build")));
 
-	app.get("*", function (req, res) {
+	app.get("*", function (req: Request, res: Response) {
 		res.sendFile(path.join(__dirname, "client/build", "index.html"));
 	});
 }
