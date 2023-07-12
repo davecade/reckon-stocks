@@ -3,15 +3,17 @@ import axios from "axios";
 import cors from "cors";
 import path from "path";
 
+if (process.env.NODE_ENV !== "production") require("dotenv").config();
+
 const app = express();
+const PORT = process.env.PORT || 9898;
+
+//-- Middleware --//
 app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-app.use(express.static(path.join(__dirname, "client/build")));
-
-app.get("/index.html", (req, res) => {
-	res.sendFile(path.resolve(__dirname, "client/build", "index.html"));
-});
-
+//-- Routes --//
 app.get("/api/stocks", async (req, res) => {
 	try {
 		const apiUrl = "https://join.reckon.com/stock-pricing";
@@ -28,11 +30,15 @@ app.get("/api/stocks", async (req, res) => {
 	}
 });
 
-app.get("*", (req, res) => {
-	res.sendFile(path.resolve(__dirname, "client/build", "index.html"));
-});
+//-- Production Route--//
+if (process.env.NODE_ENV === "production") {
+	app.use(express.static(path.join(__dirname, "client/build")));
 
-const PORT = process.env.PORT || 9898;
+	app.get("*", function (req, res) {
+		res.sendFile(path.join(__dirname, "client/build", "index.html"));
+	});
+}
+
 app.listen(PORT, () => {
 	console.log(`Server is running on port ${PORT}`);
 });
