@@ -22,12 +22,10 @@ const SummaryTable: React.FC = () => {
 			});
 			setHighlight(newHighlight);
 
-			// delay of 1 second before the highlights are reset
 			const timeoutId = setTimeout(() => {
 				setHighlight({});
 			}, 1000);
 
-			// Cleanup function
 			return () => {
 				clearTimeout(timeoutId);
 			};
@@ -48,7 +46,7 @@ const SummaryTable: React.FC = () => {
 					</tr>
 				</thead>
 				<tbody>
-					{data &&
+					{data ? (
 						data.map((stock, i) => (
 							<tr key={stock.code}>
 								<td>{stock.code}</td>
@@ -81,7 +79,12 @@ const SummaryTable: React.FC = () => {
 									{stock.currentPrice.toFixed(2)}
 								</td>
 							</tr>
-						))}
+						))
+					) : (
+						<div className={classes.loading}>
+							<p>...loading data</p>
+						</div>
+					)}
 				</tbody>
 			</table>
 		</div>

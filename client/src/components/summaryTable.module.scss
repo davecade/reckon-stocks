@@ -8,7 +8,7 @@
 .summary_table {
 	width: 100%;
 	border-collapse: collapse;
-    background-color: #111318;
+	background-color: #111318;
 	color: white;
 }
 
@@ -37,4 +37,11 @@
 			color: #ccc;
 		}
 	}
+}
+
+.loading {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
 }
