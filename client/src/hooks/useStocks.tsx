@@ -56,6 +56,8 @@ const useStocks = (): [StockData[] | null, StockData[] | null] => {
 			}
 		};
 		fetchStockData();
+
+		// fetch new data every 4 seconds
 		const intervalId = setInterval(fetchStockData, 4000);
 		return () => clearInterval(intervalId);
 	}, []);

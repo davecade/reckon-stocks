@@ -20,6 +20,8 @@ const SummaryTable: React.FC = () => {
 						prevStock.currentPrice !== stock.currentPrice;
 				}
 			});
+
+			// highlight the updated prices for 1 second
 			setHighlight(newHighlight);
 
 			const timeoutId = setTimeout(() => {
